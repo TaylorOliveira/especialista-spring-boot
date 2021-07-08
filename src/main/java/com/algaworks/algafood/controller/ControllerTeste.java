@@ -12,4 +12,10 @@ public class ControllerTeste {
     public String hello() {
         return "Hello";
     }
+
+    @GetMapping("/world")
+    @ResponseBody
+    public String world() {
+        return "world";
+    }
 }

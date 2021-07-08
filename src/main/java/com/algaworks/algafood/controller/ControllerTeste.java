@@ -18,10 +18,4 @@ public class ControllerTeste {
     public String world() {
         return "world";
     }
-
-    @GetMapping("/bird")
-    @ResponseBody
-    public String bird() {
-        return "bird";
-    }
 }

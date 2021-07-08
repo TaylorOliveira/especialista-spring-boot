@@ -13,9 +13,4 @@ public class ControllerTeste {
         return "Hello";
     }
 
-    @GetMapping("/world")
-    @ResponseBody
-    public String world() {
-        return "world";
-    }
 }

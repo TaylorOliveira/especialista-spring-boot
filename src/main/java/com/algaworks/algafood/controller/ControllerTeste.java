@@ -18,4 +18,22 @@ public class ControllerTeste {
     public String world() {
         return "world";
     }
+
+    @GetMapping("/house")
+    @ResponseBody
+    public String house() {
+        return "house";
+    }
+
+    @GetMapping("/shark")
+    @ResponseBody
+    public String shark() {
+        return "shark";
+    }
+
+    @GetMapping("/bigBang")
+    @ResponseBody
+    public String bigBang() {
+        return "bigBang";
+    }
 }

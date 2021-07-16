@@ -5,9 +5,8 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
-import java.util.List;
 
-public class ConsultaCozinha {
+public class AlteracaoCozinha {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
@@ -16,10 +15,10 @@ public class ConsultaCozinha {
 
         CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
 
-        List<Cozinha> cozinhas = cadastroCozinha.listar();
+        Cozinha cozinha = new Cozinha();
+        cozinha.setId(1l);
+        cozinha.setNome("Japonesa");
 
-        for (Cozinha cozinha : cozinhas){
-            System.out.println(cozinha.getNome());
-        }
+        cadastroCozinha.adicionar(cozinha);
     }
 }

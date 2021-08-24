@@ -25,5 +25,6 @@ public class Restore {
     private BigDecimal shippingFee;
 
     @ManyToOne
+    @JoinColumn(name = "kitchen_id")
     private Kitchen kitchen;
 }

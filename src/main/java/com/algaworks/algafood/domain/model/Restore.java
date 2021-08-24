@@ -7,11 +7,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 @Table(name = "restore")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restore {
 
     @Id
@@ -23,4 +23,7 @@ public class Restore {
 
     @Column(name = "shipping_fee")
     private BigDecimal shippingFee;
+
+    @ManyToOne
+    private Kitchen kitchen;
 }

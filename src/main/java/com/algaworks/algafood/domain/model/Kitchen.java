@@ -3,14 +3,13 @@ package com.algaworks.algafood.domain.model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 @Table(name = "kitchen")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Kitchen {
 
     @Id

@@ -6,15 +6,17 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "kitchen")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Kitchen {
+public class Permission {
 
     @Id
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String description;
 }

@@ -2,19 +2,19 @@ package com.algaworks.algafood.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "kitchen")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Kitchen {
+public class PaymentMethod {
 
     @Id
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(nullable = false)
+    private String description;
 }

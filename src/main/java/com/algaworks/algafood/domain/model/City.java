@@ -6,15 +6,18 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "kitchen")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Kitchen {
+public class City {
 
     @Id
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private State state;
 }

@@ -21,10 +21,10 @@ public class Restore {
 
     private String name;
 
-    @Column(name = "shipping_fee")
+    @Column(name = "shipping_fee", nullable = false)
     private BigDecimal shippingFee;
 
     @ManyToOne
-    @JoinColumn(name = "kitchen_id")
+    @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
 }

@@ -3,7 +3,6 @@ package com.algaworks.algafood.api.controller;
 import com.algaworks.algafood.domain.model.Kitchen;
 import com.algaworks.algafood.domain.model.payload.KitchenXmlResponse;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +36,11 @@ public class KitchenController {
             return ResponseEntity.ok(kitchen);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Kitchen save(@RequestBody Kitchen kitchen) {
+        return kitchenRepository.save(kitchen);
     }
 }

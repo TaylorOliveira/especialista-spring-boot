@@ -3,8 +3,10 @@ package com.algaworks.algafood.api.controller;
 import com.algaworks.algafood.domain.model.Kitchen;
 import com.algaworks.algafood.domain.model.payload.KitchenXmlResponse;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +32,15 @@ public class KitchenController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{kitchenId}")
-    public Kitchen search(@PathVariable Long kitchenId) {
-        return kitchenRepository.search(kitchenId);
+    public ResponseEntity<Kitchen> search(@PathVariable Long kitchenId) {
+        Kitchen kitchen =  kitchenRepository.search(kitchenId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.LOCATION, "http://localhost:8080/kitchens");
+        // return ResponseEntity.ok(kitchen);
+        // return ResponseEntity.status(HttpStatus.OK).body(kitchen);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .headers(httpHeaders)
+                .build();
     }
 }

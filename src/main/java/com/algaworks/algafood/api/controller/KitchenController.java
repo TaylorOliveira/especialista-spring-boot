@@ -56,4 +56,14 @@ public class KitchenController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping("/{kitchenId}")
+    public ResponseEntity<Kitchen> delete(@PathVariable Long kitchenId) {
+        Kitchen kitchen = kitchenRepository.search(kitchenId);
+        if(Objects.nonNull(kitchen)) {
+            kitchenRepository.remove(kitchen);
+            return  ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

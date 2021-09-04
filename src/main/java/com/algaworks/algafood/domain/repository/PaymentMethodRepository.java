@@ -8,5 +8,5 @@ public interface PaymentMethodRepository {
     List<PaymentMethod> list();
     PaymentMethod search(Long id);
     PaymentMethod save(PaymentMethod city);
-    void remove(PaymentMethod city);
+    void delete(PaymentMethod city);
 }

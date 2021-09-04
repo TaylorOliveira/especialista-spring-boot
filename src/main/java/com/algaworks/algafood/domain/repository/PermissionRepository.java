@@ -8,5 +8,5 @@ public interface PermissionRepository {
     List<Permission> list();
     Permission search(Long id);
     Permission save(Permission city);
-    void remove(Permission city);
+    void delete(Permission city);
 }

@@ -2,11 +2,13 @@ package com.algaworks.algafood.infrastructure.repository;
 
 import com.algaworks.algafood.domain.model.Kitchen;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class KitchenRepositoryImpl implements KitchenRepository {
@@ -33,8 +35,11 @@ public class KitchenRepositoryImpl implements KitchenRepository {
 
     @Override
     @Transactional
-    public void remove(Kitchen kitchen) {
-        kitchen = search(kitchen.getId());
-        entityManager.remove(kitchen);
+    public void delete(Long kitchenId) {
+        Kitchen kitchen = search(kitchenId);
+        if(Objects.nonNull(kitchen)) {
+            throw new EmptyResultDataAccessException(1);
+        }
+        entityManager.remove(kitchenId);
     }
 }

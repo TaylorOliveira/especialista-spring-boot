@@ -12,5 +12,5 @@ public interface StateRepository {
 
     State save(State city);
 
-    void remove(State city);
+    void delete(State city);
 }

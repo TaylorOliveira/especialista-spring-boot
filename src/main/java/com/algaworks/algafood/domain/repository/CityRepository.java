@@ -8,5 +8,5 @@ public interface CityRepository {
     List<City> list();
     City search(Long id);
     City save(City city);
-    void remove(City city);
+    void delete(City city);
 }

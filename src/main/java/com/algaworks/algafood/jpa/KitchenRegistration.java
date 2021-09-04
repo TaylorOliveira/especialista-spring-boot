@@ -29,7 +29,7 @@ public class KitchenRegistration {
     }
 
     @Transactional
-    public void remover(Kitchen kitchen) {
+    public void delete(Kitchen kitchen) {
         kitchen = search(kitchen.getId());
         manager.remove(kitchen);
     }

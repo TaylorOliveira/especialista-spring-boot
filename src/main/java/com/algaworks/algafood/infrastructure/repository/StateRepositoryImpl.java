@@ -33,7 +33,7 @@ public class StateRepositoryImpl implements StateRepository {
 
     @Override
     @Transactional
-    public void remove(State state) {
+    public void delete(State state) {
         state = search(state.getId());
         entityManager.remove(state);
     }

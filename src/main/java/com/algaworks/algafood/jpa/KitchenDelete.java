@@ -17,6 +17,6 @@ public class KitchenDelete {
         KitchenRepository kitchenRepository = applicationContext.getBean(KitchenRepository.class);
         Kitchen kitchen = new Kitchen();
         kitchen.setId(1L);
-        kitchenRepository.remove(kitchen);
+        kitchenRepository.delete(kitchen.getId());
     }
 }

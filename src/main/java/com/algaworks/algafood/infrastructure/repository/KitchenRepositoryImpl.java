@@ -37,9 +37,9 @@ public class KitchenRepositoryImpl implements KitchenRepository {
     @Transactional
     public void delete(Long kitchenId) {
         Kitchen kitchen = search(kitchenId);
-        if(Objects.nonNull(kitchen)) {
+        if(Objects.isNull(kitchen)) {
             throw new EmptyResultDataAccessException(1);
         }
-        entityManager.remove(kitchenId);
+        entityManager.remove(kitchen);
     }
 }

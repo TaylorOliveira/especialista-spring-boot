@@ -7,6 +7,7 @@ import com.algaworks.algafood.domain.repository.KitchenRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class KitchenService {
@@ -32,5 +33,9 @@ public class KitchenService {
                     String.format("Kitchen code %d cannot be removed as it is in use.", kitchenId)
             );
         }
+    }
+
+    public List<Kitchen> list() {
+        return kitchenRepository.list();
     }
 }

@@ -3,20 +3,17 @@ package com.algaworks.algafood.api.controller;
 import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
 import com.algaworks.algafood.domain.model.Kitchen;
-import com.algaworks.algafood.domain.model.payload.KitchenXmlResponse;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
 import com.algaworks.algafood.domain.service.KitchenService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/kitchens", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+@RequestMapping(value = "/kitchens")
 public class KitchenController {
 
     private final KitchenRepository kitchenRepository;
@@ -28,13 +25,9 @@ public class KitchenController {
         this.kitchenService = kitchenService;
     }
 
+    @GetMapping
     public List<Kitchen> list() {
-        return kitchenRepository.list();
-    }
-
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public KitchenXmlResponse listXml() {
-        return new KitchenXmlResponse(kitchenRepository.list());
+        return kitchenService.list();
     }
 
     @GetMapping("/{kitchenId}")
@@ -58,7 +51,7 @@ public class KitchenController {
         Kitchen kitchenCurrent = kitchenRepository.search(kitchenId);
         if(Objects.nonNull(kitchenCurrent)) {
             BeanUtils.copyProperties(kitchen, kitchenCurrent, "id");
-            kitchenRepository.save(kitchenCurrent);
+            kitchenService.save(kitchenCurrent);
             return ResponseEntity.ok(kitchenCurrent);
         }
         return ResponseEntity.notFound().build();
@@ -67,7 +60,7 @@ public class KitchenController {
     @DeleteMapping("/{kitchenId}")
     public ResponseEntity<Kitchen> delete(@PathVariable Long kitchenId) {
         try {
-            kitchenRepository.delete(kitchenId);
+            kitchenService.delete(kitchenId);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException exception) {
             return ResponseEntity.notFound().build();

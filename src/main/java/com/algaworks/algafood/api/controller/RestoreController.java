@@ -1,7 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
-import com.algaworks.algafood.domain.model.Kitchen;
 import com.algaworks.algafood.domain.model.Restore;
 import com.algaworks.algafood.domain.repository.RestoreRepository;
 import com.algaworks.algafood.domain.service.RestoreService;
@@ -9,7 +8,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -41,17 +39,17 @@ public class RestoreController {
     @PutMapping("/{restoreId}")
     public ResponseEntity<?> update(@PathVariable Long restoreId,
                                           @RequestBody Restore restore) {
-        Restore restoreCurrent = restoreRepository.search(restoreId);
-        if(Objects.nonNull(restoreCurrent)) {
-            try {
+        try {
+            Restore restoreCurrent = restoreRepository.search(restoreId);
+            if(Objects.nonNull(restoreCurrent)) {
                 BeanUtils.copyProperties(restore, restoreCurrent, "id");;
                 return ResponseEntity.ok(restoreService.save(restoreCurrent));
-            } catch (EntityNotFoundException exception) {
-                return ResponseEntity.badRequest()
-                        .body(exception.getLocalizedMessage());
             }
+            return ResponseEntity.notFound().build();
+        } catch (EntityNotFoundException exception) {
+            return ResponseEntity.badRequest()
+                    .body(exception.getLocalizedMessage());
         }
-        return ResponseEntity.notFound().build();
     }
 
     @PostMapping

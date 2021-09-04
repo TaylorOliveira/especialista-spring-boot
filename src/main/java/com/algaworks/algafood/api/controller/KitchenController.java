@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.controller;
 import com.algaworks.algafood.domain.model.Kitchen;
 import com.algaworks.algafood.domain.model.payload.KitchenXmlResponse;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
+import com.algaworks.algafood.domain.service.KitchenService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,9 +17,11 @@ import java.util.Objects;
 public class KitchenController {
 
     private final KitchenRepository kitchenRepository;
+    private final KitchenService kitchenService;
 
-    public KitchenController(KitchenRepository kitchenRepository) {
+    public KitchenController(KitchenRepository kitchenRepository, KitchenService kitchenService) {
         this.kitchenRepository = kitchenRepository;
+        this.kitchenService = kitchenService;
     }
 
     public List<Kitchen> list() {
@@ -42,7 +45,7 @@ public class KitchenController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Kitchen save(@RequestBody Kitchen kitchen) {
-        return kitchenRepository.save(kitchen);
+        return kitchenService.save(kitchen);
     }
 
     @PutMapping("/{kitchenId}")

@@ -18,6 +18,10 @@ public class KitchenService {
         this.kitchenRepository = kitchenRepository;
     }
 
+    public List<Kitchen> list() {
+        return kitchenRepository.list();
+    }
+
     public Kitchen save(Kitchen kitchen) {
         return kitchenRepository.save(kitchen);
     }
@@ -33,9 +37,5 @@ public class KitchenService {
                     String.format("Kitchen code %d cannot be removed as it is in use.", kitchenId)
             );
         }
-    }
-
-    public List<Kitchen> list() {
-        return kitchenRepository.list();
     }
 }

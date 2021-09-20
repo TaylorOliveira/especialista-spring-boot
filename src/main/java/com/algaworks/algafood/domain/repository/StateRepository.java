@@ -10,7 +10,7 @@ public interface StateRepository {
 
     State search(Long id);
 
-    State save(State city);
+    State save(State state);
 
-    void delete(State city);
+    void delete(Long stateId);
 }

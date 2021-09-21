@@ -1,45 +1,48 @@
 package com.algaworks.algafood.infrastructure.repository;
 
+import com.algaworks.algafood.domain.model.City;
 import com.algaworks.algafood.domain.model.Kitchen;
-import com.algaworks.algafood.domain.repository.KitchenRepository;
+import com.algaworks.algafood.domain.model.State;
+import com.algaworks.algafood.domain.repository.CityRepository;
+import com.algaworks.algafood.domain.repository.StateRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Objects;
 
 @Component
-public class KitchenRepositoryImpl implements KitchenRepository {
+public class CityRepositoryImpl implements CityRepository {
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public List<Kitchen> list() {
-        return entityManager.createQuery("from Kitchen", Kitchen.class)
+    public List<City> list() {
+        return entityManager.createQuery("from City", City.class)
                 .getResultList();
     }
 
     @Override
-    public Kitchen search(Long id) {
-        return entityManager.find(Kitchen.class, id);
+    public City search(Long id) {
+        return entityManager.find(City.class, id);
+    }
+
+    @Override
+    public City save(City city) {
+        return entityManager.merge(city);
     }
 
     @Override
     @Transactional
-    public Kitchen save(Kitchen kitchen) {
-        return entityManager.merge(kitchen);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Long kitchenId) {
-        Kitchen kitchen = search(kitchenId);
-        if(Objects.isNull(kitchen)) {
+    public void delete(Long cityId) {
+        City city = search(cityId);
+        if(Objects.isNull(city)) {
             throw new EmptyResultDataAccessException(1);
         }
-        entityManager.remove(kitchen);
+        entityManager.remove(city);
     }
 }

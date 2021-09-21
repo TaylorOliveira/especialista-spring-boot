@@ -33,7 +33,7 @@ public class RestoreRepositoryImpl implements RestoreRepository {
 
     @Override
     @Transactional
-    public void remove(Restore restore) {
+    public void delete(Restore restore) {
         restore = search(restore.getId());
         entityManager.remove(restore);
     }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -61,5 +62,22 @@ public class RestoreController {
             return ResponseEntity.badRequest()
                     .body(exception.getLocalizedMessage());
         }
+    }
+
+    @PatchMapping("/{restoreId}")
+    public ResponseEntity<?> updatePartial(@PathVariable Long restoreId,
+                                           @RequestBody Map<String, Object> field) {
+        Restore restoreCurrent = restoreRepository.search(restoreId);
+        if(Objects.isNull(restoreCurrent)) {
+            return ResponseEntity.notFound().build();
+        }
+        mergeField(field);
+        return update(restoreId, restoreCurrent);
+    }
+
+    private void mergeField(Map<String, Object> field) {
+        field.forEach((name, value) -> {
+            System.out.println(name + " = " + value);
+        });
     }
 }

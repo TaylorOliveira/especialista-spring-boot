@@ -4,10 +4,14 @@ import com.algaworks.algafood.domain.exception.EntityNotFoundException;
 import com.algaworks.algafood.domain.model.Restore;
 import com.algaworks.algafood.domain.repository.RestoreRepository;
 import com.algaworks.algafood.domain.service.RestoreService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -66,18 +70,25 @@ public class RestoreController {
 
     @PatchMapping("/{restoreId}")
     public ResponseEntity<?> updatePartial(@PathVariable Long restoreId,
-                                           @RequestBody Map<String, Object> field) {
-        Restore restoreCurrent = restoreRepository.search(restoreId);
-        if(Objects.isNull(restoreCurrent)) {
+                                           @RequestBody Map<String, Object> fields) {
+        Restore restore = restoreRepository.search(restoreId);
+        if(Objects.isNull(restore)) {
             return ResponseEntity.notFound().build();
         }
-        mergeField(field);
-        return update(restoreId, restoreCurrent);
+        mergeFieldInRestore(fields, restore);
+        return update(restoreId, restore);
     }
 
-    private void mergeField(Map<String, Object> field) {
-        field.forEach((name, value) -> {
-            System.out.println(name + " = " + value);
+    private void mergeFieldInRestore(Map<String, Object> fields, Restore restore) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Restore restoreOrigen = objectMapper.convertValue(fields, Restore.class);
+        fields.forEach((name, value) -> {
+            Field field = ReflectionUtils.findField(Restore.class, name);
+            if(Objects.nonNull(field)) {
+                field.setAccessible(true);
+                Object fieldOrigen = ReflectionUtils.getField(field, restoreOrigen);
+                ReflectionUtils.setField(field, restore, fieldOrigen);
+            }
         });
     }
 }

@@ -1,7 +1,7 @@
 package com.algaworks.algafood.infrastructure.repository;
 
-import com.algaworks.algafood.domain.model.Kitchen;
-import com.algaworks.algafood.domain.repository.KitchenRepository;
+import com.algaworks.algafood.domain.model.State;
+import com.algaworks.algafood.domain.repository.StateRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,35 +11,35 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class KitchenRepositoryImpl implements KitchenRepository {
+public class StateRepositoryImpl implements StateRepository {
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public List<Kitchen> list() {
-        return entityManager.createQuery("from Kitchen", Kitchen.class)
+    public List<State> list() {
+        return entityManager.createQuery("from State", State.class)
                 .getResultList();
     }
 
     @Override
-    public Kitchen search(Long id) {
-        return entityManager.find(Kitchen.class, id);
+    public State search(Long id) {
+        return entityManager.find(State.class, id);
     }
 
     @Override
     @Transactional
-    public Kitchen save(Kitchen kitchen) {
-        return entityManager.merge(kitchen);
+    public State save(State state) {
+        return entityManager.merge(state);
     }
 
     @Override
     @Transactional
-    public void delete(Long kitchenId) {
-        Kitchen kitchen = search(kitchenId);
-        if(Objects.isNull(kitchen)) {
+    public void delete(Long stateId) {
+        State state = search(stateId);
+        if(Objects.isNull(state)) {
             throw new EmptyResultDataAccessException(1);
         }
-        entityManager.remove(kitchen);
+        entityManager.remove(state);
     }
 }

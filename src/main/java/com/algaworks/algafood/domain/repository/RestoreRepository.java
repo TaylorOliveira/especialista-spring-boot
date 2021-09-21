@@ -11,5 +11,5 @@ public interface RestoreRepository {
 
     Restore save(Restore kitchen);
 
-    void remove(Restore kitchen);
+    void delete(Restore kitchen);
 }

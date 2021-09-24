@@ -28,6 +28,13 @@ public class KitchenRepositoryImpl implements KitchenRepository {
     }
 
     @Override
+    public List<Kitchen> searchKitchen(String name) {
+        return entityManager.createQuery("from Kitchen where name = :name", Kitchen.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
+
+    @Override
     @Transactional
     public Kitchen save(Kitchen kitchen) {
         return entityManager.merge(kitchen);

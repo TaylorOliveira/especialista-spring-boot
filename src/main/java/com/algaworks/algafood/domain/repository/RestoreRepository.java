@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public interface RestoreRepository extends JpaRepository<Restore, Long> {
 
+    @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
+    List<Restore> consultByName(String name, @Param("id") Long kitchenId);
+
     List<Restore> findByShippingFeeBetween(BigDecimal first, BigDecimal last);
 
     List<Restore> findByNameContainingAndKitchenId(String name, Long kitchen);
-
-    @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
-    List<Restore> consultByName(String name, @Param("id") Long kitchenId);
 
     Optional<Restore> findFirstByNameContaining(String name);
 

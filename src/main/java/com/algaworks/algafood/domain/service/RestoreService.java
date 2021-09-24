@@ -19,8 +19,8 @@ public class RestoreService {
         this.kitchenRepository = kitchenRepository;
     }
 
-    public List<Restore> list() {
-        return restoreRepository.list();
+    public List<Restore> findAll() {
+        return restoreRepository.findAll();
     }
 
     public Restore save(Restore restore) {

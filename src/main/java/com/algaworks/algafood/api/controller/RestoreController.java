@@ -1,20 +1,20 @@
 package com.algaworks.algafood.api.controller;
 
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
-import com.algaworks.algafood.domain.model.Restore;
 import com.algaworks.algafood.domain.repository.RestoreRepository;
 import com.algaworks.algafood.domain.service.RestoreService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.ReflectionUtils;
+import com.algaworks.algafood.domain.model.Restore;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.util.ReflectionUtils;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.beans.BeanUtils;
 import java.lang.reflect.Field;
+import java.util.Optional;
+import java.util.Objects;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/restaurants")
@@ -28,27 +28,25 @@ public class RestoreController {
         this.restoreService = restoreService;
     }
 
+    @GetMapping
     public List<Restore> list() {
-        return restoreService.list();
+        return restoreService.findAll();
     }
 
     @GetMapping("/{restoreId}")
     public ResponseEntity<Restore> search(@PathVariable Long restoreId) {
-        Restore restore = restoreRepository.search(restoreId);
-        if(Objects.nonNull(restore)) {
-            return ResponseEntity.ok(restore);
-        }
-        return ResponseEntity.notFound().build();
+        Optional<Restore> restore = restoreRepository.findById(restoreId);
+        return restore.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{restoreId}")
     public ResponseEntity<?> update(@PathVariable Long restoreId,
-                                          @RequestBody Restore restore) {
+                                          @RequestBody Restore restoreRequest) {
         try {
-            Restore restoreCurrent = restoreRepository.search(restoreId);
-            if(Objects.nonNull(restoreCurrent)) {
-                BeanUtils.copyProperties(restore, restoreCurrent, "id");;
-                return ResponseEntity.ok(restoreService.save(restoreCurrent));
+            Optional<Restore> restore = restoreRepository.findById(restoreId);
+            if(restore.isPresent()) {
+                BeanUtils.copyProperties(restoreRequest, restore.get(), "id");;
+                return ResponseEntity.ok(restoreService.save(restore.get()));
             }
             return ResponseEntity.notFound().build();
         } catch (EntityNotFoundException exception) {
@@ -71,12 +69,12 @@ public class RestoreController {
     @PatchMapping("/{restoreId}")
     public ResponseEntity<?> updatePartial(@PathVariable Long restoreId,
                                            @RequestBody Map<String, Object> fields) {
-        Restore restore = restoreRepository.search(restoreId);
-        if(Objects.isNull(restore)) {
+        Optional<Restore> restore = restoreRepository.findById(restoreId);
+        if(restore.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        mergeFieldInRestore(fields, restore);
-        return update(restoreId, restore);
+        mergeFieldInRestore(fields, restore.get());
+        return update(restoreId, restore.get());
     }
 
     private void mergeFieldInRestore(Map<String, Object> fields, Restore restore) {

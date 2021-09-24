@@ -1,11 +1,11 @@
 package com.algaworks.algafood.domain.service;
 
-import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
+import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.repository.CityRepository;
-import com.algaworks.algafood.domain.model.City;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import com.algaworks.algafood.domain.model.City;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -18,8 +18,8 @@ public class CityService {
         this.cityRepository = cityRepository;
     }
 
-    public List<City> list() {
-        return cityRepository.list();
+    public List<City> findAll() {
+        return cityRepository.findAll();
     }
 
     public City save(City city) {
@@ -28,7 +28,7 @@ public class CityService {
 
     public void delete(Long cityId) {
         try {
-            cityRepository.delete(cityId);
+            cityRepository.deleteById(cityId);
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotFoundException(
                     String.format("There is no city registration with code %d.", cityId));

@@ -1,11 +1,11 @@
 package com.algaworks.algafood.domain.service;
 
-import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
-import com.algaworks.algafood.domain.model.Kitchen;
+import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import com.algaworks.algafood.domain.model.Kitchen;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class KitchenService {
         this.kitchenRepository = kitchenRepository;
     }
 
-    public List<Kitchen> list() {
+    public List<Kitchen> findAll() {
         return kitchenRepository.findAll();
     }
 

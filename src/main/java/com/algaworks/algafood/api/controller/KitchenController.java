@@ -27,7 +27,7 @@ public class KitchenController {
 
     @GetMapping
     public List<Kitchen> list() {
-        return kitchenRepository.findAll();
+        return kitchenService.findAll();
     }
 
     @GetMapping("/{kitchenId}")
@@ -48,8 +48,8 @@ public class KitchenController {
         Optional<Kitchen> kitchen = kitchenRepository.findById(kitchenId);
         if(kitchen.isPresent()) {
             BeanUtils.copyProperties(kitchenRequest, kitchen.get(), "id");
-            Kitchen kitchenSalved = kitchenService.save(kitchen.get());
-            return ResponseEntity.ok(kitchenSalved);
+            Kitchen kitchenSave = kitchenService.save(kitchen.get());
+            return ResponseEntity.ok(kitchenSave);
         }
         return ResponseEntity.notFound().build();
     }

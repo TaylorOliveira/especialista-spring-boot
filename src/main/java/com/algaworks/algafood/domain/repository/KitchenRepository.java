@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface KitchenRepository extends JpaRepository<Kitchen, Long> {
 
-    List<Kitchen> name(String name);
+    List<Kitchen> findByName(String name);
 }

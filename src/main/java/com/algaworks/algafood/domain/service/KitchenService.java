@@ -19,7 +19,7 @@ public class KitchenService {
     }
 
     public List<Kitchen> list() {
-        return kitchenRepository.list();
+        return kitchenRepository.findAll();
     }
 
     public Kitchen save(Kitchen kitchen) {
@@ -28,7 +28,7 @@ public class KitchenService {
 
     public void delete(Long kitchenId) {
         try {
-            kitchenRepository.delete(kitchenId);
+            kitchenRepository.deleteById(kitchenId);
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotFoundException(
                     String.format("There is no kitchen registration with code %d.", kitchenId));

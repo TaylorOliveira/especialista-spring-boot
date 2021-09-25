@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.List;
 
 @Repository
-public interface RestoreRepository extends JpaRepository<Restore, Long> {
+public interface RestoreRepository extends JpaRepository<Restore, Long>, CustomizeRestoreRepository {
 
     @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
     List<Restore> consultByName(String name, @Param("id") Long kitchenId);
@@ -24,4 +24,6 @@ public interface RestoreRepository extends JpaRepository<Restore, Long> {
     List<Restore> findTop10ByNameContaining(String name);
 
     int countByKitchenId(Long kitchenId);
+
+    List<Restore> find(String name, BigDecimal startShippingFee, BigDecimal lastShippingFee);
 }

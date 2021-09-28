@@ -5,13 +5,14 @@ import com.algaworks.algafood.domain.model.Restore;
 import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import org.springframework.util.StringUtils;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.Root;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
@@ -26,13 +27,20 @@ public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
         CriteriaQuery<Restore> criteria = builder.createQuery(Restore.class);
         Root<Restore> rootRestore = criteria.from(Restore.class);
 
-        Predicate predicateName = builder.like(rootRestore.get("name"), name);
-        Predicate predicateStartSf =
-                builder.greaterThanOrEqualTo(rootRestore.get("shippingFee"), startShippingFee);
-        Predicate predicateLastSf =
-                builder.lessThanOrEqualTo(rootRestore.get("shippingFee"), lastShippingFee);
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        if(StringUtils.hasText(name)) {
+            predicates.add(builder.like(rootRestore.get("name"), name));
+        }
+        if(Objects.nonNull(startShippingFee)) {
+            predicates.add(builder
+                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), startShippingFee));
+        }
+        if(Objects.nonNull(lastShippingFee)) {
+            predicates.add(builder
+                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), lastShippingFee));
+        }
 
-        criteria.where(predicateName, predicateStartSf, predicateLastSf);
+        criteria.where(predicates.toArray(new Predicate[0]));
 
         TypedQuery<Restore> restoreTypedQuery = entityManager.createQuery(criteria);
         return restoreTypedQuery.getResultList();

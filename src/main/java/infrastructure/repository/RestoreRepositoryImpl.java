@@ -8,6 +8,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,10 +22,19 @@ public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
     public List<Restore> find(String name,
                               BigDecimal startShippingFee, BigDecimal lastShippingFee) {
 
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Restore> restoreCriteriaQuery = criteriaBuilder.createQuery(Restore.class);
-        restoreCriteriaQuery.from(Restore.class);
-        TypedQuery<Restore> restoreTypedQuery = entityManager.createQuery(restoreCriteriaQuery);
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Restore> criteria = builder.createQuery(Restore.class);
+        Root<Restore> rootRestore = criteria.from(Restore.class);
+
+        Predicate predicateName = builder.like(rootRestore.get("name"), name);
+        Predicate predicateStartSf =
+                builder.greaterThanOrEqualTo(rootRestore.get("shippingFee"), startShippingFee);
+        Predicate predicateLastSf =
+                builder.lessThanOrEqualTo(rootRestore.get("shippingFee"), lastShippingFee);
+
+        criteria.where(predicateName, predicateStartSf, predicateLastSf);
+
+        TypedQuery<Restore> restoreTypedQuery = entityManager.createQuery(criteria);
         return restoreTypedQuery.getResultList();
     }
 }

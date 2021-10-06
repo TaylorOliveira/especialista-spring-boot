@@ -5,6 +5,8 @@ import com.algaworks.algafood.domain.repository.RestoreRepository;
 import com.algaworks.algafood.domain.service.RestoreService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.algaworks.algafood.domain.model.Restore;
+import infrastructure.repository.spec.RestoreWithFreeShippingSpec;
+import infrastructure.repository.spec.RestoreWithSimilarNameSpec;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.http.ResponseEntity;
@@ -88,5 +90,13 @@ public class RestoreController {
                 ReflectionUtils.setField(field, restore, fieldOrigen);
             }
         });
+    }
+
+    @GetMapping("/restore/with-free-shipping")
+    public List<Restore> restaurantWithFreeShipping(String name) {
+        RestoreWithFreeShippingSpec withFreeShipping = new RestoreWithFreeShippingSpec();
+        RestoreWithSimilarNameSpec withSimilarName = new RestoreWithSimilarNameSpec(name);
+
+        return restoreRepository.findAll(withFreeShipping.and(withSimilarName));
     }
 }

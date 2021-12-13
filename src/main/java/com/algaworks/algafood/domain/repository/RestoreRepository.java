@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface RestoreRepository extends JpaRepository<Restore, Long>,
-        JpaSpecificationExecutor<Restore>, CustomizeRestoreRepository {
+        CustomizeRestoreRepository, JpaSpecificationExecutor<Restore> {
 
     @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
     List<Restore> consultByName(String name, @Param("id") Long kitchenId);

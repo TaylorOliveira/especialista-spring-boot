@@ -1,7 +1,10 @@
 package infrastructure.repository;
 
 import com.algaworks.algafood.domain.repository.CustomizeRestoreRepository;
+import com.algaworks.algafood.domain.repository.RestoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.algaworks.algafood.domain.model.Restore;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,11 +17,18 @@ import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static infrastructure.repository.spec.RestoreSpecs.withFreeShipping;
+import static infrastructure.repository.spec.RestoreSpecs.withSimilarName;
+
 @Repository
 public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    @Lazy
+    private RestoreRepository restoreRepository;
 
     public List<Restore> find(String name,
                               BigDecimal startShippingFee, BigDecimal lastShippingFee) {
@@ -44,5 +54,10 @@ public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
 
         TypedQuery<Restore> restoreTypedQuery = entityManager.createQuery(criteria);
         return restoreTypedQuery.getResultList();
+    }
+
+    @Override
+    public List<Restore> findWithShippingFree(String name) {
+        return restoreRepository.findAll(withFreeShipping().and(withSimilarName(name)));
     }
 }

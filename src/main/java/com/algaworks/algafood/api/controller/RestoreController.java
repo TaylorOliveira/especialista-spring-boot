@@ -1,9 +1,9 @@
 package com.algaworks.algafood.api.controller;
 
-import static infrastructure.repository.spec.RestoreSpecs.*;
 
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
 import com.algaworks.algafood.domain.repository.RestoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.algaworks.algafood.domain.service.RestoreService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.algaworks.algafood.domain.model.Restore;
@@ -22,13 +22,10 @@ import java.util.Map;
 @RequestMapping("/restaurants")
 public class RestoreController {
 
-    private final RestoreRepository restoreRepository;
-    private final RestoreService restoreService;
-
-    public RestoreController(RestoreRepository restoreRepository, RestoreService restoreService) {
-        this.restoreRepository = restoreRepository;
-        this.restoreService = restoreService;
-    }
+    @Autowired
+    private RestoreRepository restoreRepository;
+    @Autowired
+    private RestoreService restoreService;
 
     @GetMapping
     public List<Restore> list() {
@@ -94,6 +91,6 @@ public class RestoreController {
 
     @GetMapping("/restore/with-free-shipping")
     public List<Restore> restaurantWithFreeShipping(@RequestParam("name") String name) {
-        return restoreRepository.findAll(withFreeShipping().and(withSimilarName(name)));
+        return restoreRepository.findWithShippingFree(name);
     }
 }

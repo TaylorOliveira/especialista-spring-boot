@@ -1,20 +1,20 @@
 package com.algaworks.algafood.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.algaworks.algafood.domain.model.Restore;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import com.algaworks.algafood.domain.model.Restore;
 import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.List;
 
 @Repository
-public interface RestoreRepository extends JpaRepository<Restore, Long>,
-        CustomizeRestoreRepository, JpaSpecificationExecutor<Restore> {
+public interface RestoreRepository
+        extends JpaRepository<Restore, Long>, RestoreRepositoryQueries,
+        JpaSpecificationExecutor<Restore> {
 
-    @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
+    // @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
     List<Restore> consultByName(String name, @Param("id") Long kitchenId);
 
     List<Restore> findByShippingFeeBetween(BigDecimal first, BigDecimal last);
@@ -27,5 +27,5 @@ public interface RestoreRepository extends JpaRepository<Restore, Long>,
 
     int countByKitchenId(Long kitchenId);
 
-    List<Restore> find(String name, BigDecimal startShippingFee, BigDecimal lastShippingFee);
+    List<Restore> find(String name, BigDecimal initialShippingFee, BigDecimal finalShippingFee);
 }

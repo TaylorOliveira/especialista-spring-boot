@@ -1,6 +1,6 @@
 package infrastructure.repository;
 
-import com.algaworks.algafood.domain.repository.CustomizeRestoreRepository;
+import com.algaworks.algafood.domain.repository.RestoreRepositoryQueries;
 import com.algaworks.algafood.domain.repository.RestoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.algaworks.algafood.domain.model.Restore;
@@ -21,7 +21,7 @@ import static infrastructure.repository.spec.RestoreSpecs.withFreeShipping;
 import static infrastructure.repository.spec.RestoreSpecs.withSimilarName;
 
 @Repository
-public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
+public class RestoreRepositoryImpl implements RestoreRepositoryQueries {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -31,7 +31,7 @@ public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
     private RestoreRepository restoreRepository;
 
     public List<Restore> find(String name,
-                              BigDecimal startShippingFee, BigDecimal lastShippingFee) {
+                              BigDecimal initialShippingFee, BigDecimal finalShippingFee) {
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Restore> criteria = builder.createQuery(Restore.class);
@@ -41,13 +41,13 @@ public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
         if(StringUtils.hasText(name)) {
             predicates.add(builder.like(rootRestore.get("name"), name));
         }
-        if(Objects.nonNull(startShippingFee)) {
+        if(Objects.nonNull(initialShippingFee)) {
             predicates.add(builder
-                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), startShippingFee));
+                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), initialShippingFee));
         }
-        if(Objects.nonNull(lastShippingFee)) {
+        if(Objects.nonNull(finalShippingFee)) {
             predicates.add(builder
-                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), lastShippingFee));
+                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), finalShippingFee));
         }
 
         criteria.where(predicates.toArray(new Predicate[0]));
@@ -57,7 +57,7 @@ public class RestoreRepositoryImpl implements CustomizeRestoreRepository {
     }
 
     @Override
-    public List<Restore> findWithShippingFree(String name) {
+    public List<Restore> findWithFreeShipping(String name) {
         return restoreRepository.findAll(withFreeShipping().and(withSimilarName(name)));
     }
 }

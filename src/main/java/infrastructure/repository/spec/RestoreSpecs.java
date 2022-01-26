@@ -13,6 +13,6 @@ public class RestoreSpecs {
 
     public static Specification<Restore> withSimilarName(String name) {
         return (root, criteriaQuery, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("name"), String.join("", "%", name, "%"));
+                criteriaBuilder.like(root.get("name"), "%" + name + "%");
     }
 }

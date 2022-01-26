@@ -91,6 +91,6 @@ public class RestoreController {
 
     @GetMapping("/restore/with-free-shipping")
     public List<Restore> restaurantWithFreeShipping(@RequestParam("name") String name) {
-        return restoreRepository.findWithShippingFree(name);
+        return restoreRepository.findWithFreeShipping(name);
     }
 }

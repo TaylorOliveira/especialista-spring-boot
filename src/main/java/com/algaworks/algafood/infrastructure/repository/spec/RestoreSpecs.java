@@ -1,4 +1,4 @@
-package infrastructure.repository.spec;
+package com.algaworks.algafood.infrastructure.repository.spec;
 
 import org.springframework.data.jpa.domain.Specification;
 import com.algaworks.algafood.domain.model.Restore;

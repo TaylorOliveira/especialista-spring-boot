@@ -1,7 +1,8 @@
-package infrastructure.repository;
+package com.algaworks.algafood.infrastructure.repository;
 
 import com.algaworks.algafood.domain.repository.RestoreRepositoryQueries;
 import com.algaworks.algafood.domain.repository.RestoreRepository;
+import com.algaworks.algafood.infrastructure.repository.spec.RestoreSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.algaworks.algafood.domain.model.Restore;
 import org.springframework.context.annotation.Lazy;
@@ -16,9 +17,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.util.*;
-
-import static infrastructure.repository.spec.RestoreSpecs.withFreeShipping;
-import static infrastructure.repository.spec.RestoreSpecs.withSimilarName;
 
 @Repository
 public class RestoreRepositoryImpl implements RestoreRepositoryQueries {
@@ -58,6 +56,6 @@ public class RestoreRepositoryImpl implements RestoreRepositoryQueries {
 
     @Override
     public List<Restore> findWithFreeShipping(String name) {
-        return restoreRepository.findAll(withFreeShipping().and(withSimilarName(name)));
+        return restoreRepository.findAll(RestoreSpecs.withFreeShipping().and(RestoreSpecs.withSimilarName(name)));
     }
 }

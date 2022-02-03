@@ -27,6 +27,9 @@ public class Restore {
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
 
+    @Embedded
+    private Address address;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restore_payment_method",

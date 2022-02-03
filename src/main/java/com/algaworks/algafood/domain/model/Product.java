@@ -28,7 +28,7 @@ public class Product {
     @Column(nullable = false)
     private Boolean active;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Restore restore;
+//    @ManyToOne
+//    @JoinColumn(nullable = false)
+//    private Restore restore;
 }

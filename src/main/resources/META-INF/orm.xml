@@ -7,7 +7,7 @@
 
     <named-query name="Restore.consultByName">
         <query>
-            from Restore
+            from tbl_restore
             where name like concat('%', :name, '%')
             and kitchen.id = :id
         </query>

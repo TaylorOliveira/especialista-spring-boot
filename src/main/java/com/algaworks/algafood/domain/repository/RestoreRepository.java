@@ -1,20 +1,18 @@
 package com.algaworks.algafood.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.query.Param;
 import com.algaworks.algafood.domain.model.Restore;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.List;
 
 @Repository
-public interface RestoreRepository
-        extends CustomJpaRepository<Restore, Long>, RestoreRepositoryQueries,
-        JpaSpecificationExecutor<Restore> {
+public interface RestoreRepository extends CustomJpaRepository<Restore, Long>,
+        RestoreRepositoryQueries, JpaSpecificationExecutor<Restore> {
 
-    // @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
-    List<Restore> consultByName(String name, @Param("id") Long kitchenId);
+    List<Restore> consultByName(@Param("name") String name, @Param("id") Long kitchenId);
 
     List<Restore> findByShippingFeeBetween(BigDecimal first, BigDecimal last);
 

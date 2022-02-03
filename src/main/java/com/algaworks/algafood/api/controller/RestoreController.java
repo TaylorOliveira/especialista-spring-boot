@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping("/restores")
 public class RestoreController {
 
     @Autowired
@@ -91,7 +91,7 @@ public class RestoreController {
     }
 
     @GetMapping("/restore/with-free-shipping")
-    public List<Restore> restaurantWithFreeShipping(@RequestParam("name") String name) {
+    public List<Restore> restoresWithFreeShipping(@RequestParam("name") String name) {
         return restoreRepository.findWithFreeShipping(name);
     }
 }

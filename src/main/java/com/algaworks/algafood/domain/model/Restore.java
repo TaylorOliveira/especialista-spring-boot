@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity(name = "tbl_entity")
+@Entity(name = "tbl_restore")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restore {
 
@@ -45,7 +45,7 @@ public class Restore {
     private List<PaymentMethod> paymentMethodList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "restore")
+    @OneToMany
     private List<Product> products;
 
     @JsonIgnore

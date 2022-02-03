@@ -56,6 +56,7 @@ public class RestoreRepositoryImpl implements RestoreRepositoryQueries {
 
     @Override
     public List<Restore> findWithFreeShipping(String name) {
-        return restoreRepository.findAll(RestoreSpecs.withFreeShipping().and(RestoreSpecs.withSimilarName(name)));
+        return restoreRepository.findAll(RestoreSpecs.withFreeShipping()
+                .and(RestoreSpecs.withSimilarName(name)));
     }
 }

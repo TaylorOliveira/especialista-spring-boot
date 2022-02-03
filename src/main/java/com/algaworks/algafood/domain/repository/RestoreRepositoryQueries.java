@@ -6,8 +6,7 @@ import java.util.List;
 
 public interface RestoreRepositoryQueries {
 
-    List<Restore> find(String name,
-                       BigDecimal initialShippingFee, BigDecimal finalShippingFee);
+    List<Restore> find(String name, BigDecimal initialShippingFee, BigDecimal finalShippingFee);
 
     List<Restore> findWithFreeShipping(String name);
 }

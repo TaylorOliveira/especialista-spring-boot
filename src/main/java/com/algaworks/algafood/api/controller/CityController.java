@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cities")
@@ -26,16 +27,13 @@ public class CityController {
 
     @GetMapping
     public List<City> list() {
-        return cityService.list();
+        return cityService.findAll();
     }
 
     @GetMapping("/{cityId}")
     public ResponseEntity<City> search(@PathVariable Long cityId) {
-        City city = cityRepository.search(cityId);
-        if(Objects.nonNull(city)) {
-            return ResponseEntity.ok(city);
-        }
-        return ResponseEntity.notFound().build();
+        Optional<City> city = cityRepository.findById(cityId);
+        return city.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -46,12 +44,12 @@ public class CityController {
 
     @PutMapping("/{cityId}")
     public ResponseEntity<City> update(@PathVariable Long cityId,
-                                          @RequestBody City city) {
-        City cityCurrent = cityRepository.search(cityId);
-        if(Objects.nonNull(cityCurrent)) {
-            BeanUtils.copyProperties(city, cityCurrent, "id");
-            cityService.save(cityCurrent);
-            return ResponseEntity.ok(cityCurrent);
+                                          @RequestBody City cityRequest) {
+        Optional<City> city = cityRepository.findById(cityId);
+        if(city.isPresent()) {
+            BeanUtils.copyProperties(cityRequest, city.get(), "id");
+            City citySave = cityService.save(city.get());
+            return ResponseEntity.ok(citySave);
         }
         return ResponseEntity.notFound().build();
     }

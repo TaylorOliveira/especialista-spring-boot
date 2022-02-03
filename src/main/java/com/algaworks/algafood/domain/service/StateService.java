@@ -1,11 +1,11 @@
 package com.algaworks.algafood.domain.service;
 
-import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
+import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.repository.StateRepository;
-import com.algaworks.algafood.domain.model.State;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import com.algaworks.algafood.domain.model.State;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +23,7 @@ public class StateService {
 
     public void delete(Long stateId) {
         try {
-            stateRepository.delete(stateId);
+            stateRepository.deleteById(stateId);
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotFoundException(
                     String.format("There is no state registration with code %d.", stateId));

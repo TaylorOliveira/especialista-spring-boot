@@ -1,15 +1,30 @@
 package com.algaworks.algafood.domain.repository;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.query.Param;
 import com.algaworks.algafood.domain.model.Restore;
+import org.springframework.stereotype.Repository;
+import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.List;
 
-public interface RestoreRepository {
+@Repository
+public interface RestoreRepository
+        extends CustomJpaRepository<Restore, Long>, RestoreRepositoryQueries,
+        JpaSpecificationExecutor<Restore> {
 
-    List<Restore> list();
+    // @Query("FROM Restore WHERE name LIKE %:name% AND kitchen.id = :id")
+    List<Restore> consultByName(String name, @Param("id") Long kitchenId);
 
-    Restore search(Long id);
+    List<Restore> findByShippingFeeBetween(BigDecimal first, BigDecimal last);
 
-    Restore save(Restore kitchen);
+    List<Restore> findByNameContainingAndKitchenId(String name, Long kitchen);
 
-    void delete(Restore kitchen);
+    Optional<Restore> findFirstByNameContaining(String name);
+
+    List<Restore> findTop10ByNameContaining(String name);
+
+    int countByKitchenId(Long kitchenId);
+
+    List<Restore> find(String name, BigDecimal initialShippingFee, BigDecimal finalShippingFee);
 }

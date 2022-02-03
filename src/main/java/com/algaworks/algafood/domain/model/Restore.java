@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@Table(name = "restore")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restore {
 

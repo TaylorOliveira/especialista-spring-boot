@@ -44,7 +44,8 @@ public class RestoreController {
         try {
             Optional<Restore> restore = restoreRepository.findById(restoreId);
             if(restore.isPresent()) {
-                BeanUtils.copyProperties(restoreRequest, restore.get(), "id");;
+                BeanUtils.copyProperties(restoreRequest, restore.get(),
+                        "id", "paymentMethodList");
                 return ResponseEntity.ok(restoreService.save(restore.get()));
             }
             return ResponseEntity.notFound().build();

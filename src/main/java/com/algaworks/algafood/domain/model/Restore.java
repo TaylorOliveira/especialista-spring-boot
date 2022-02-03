@@ -1,5 +1,6 @@
 package com.algaworks.algafood.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Restore {
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restore_payment_method",
         joinColumns = @JoinColumn(name = "restore_id"),

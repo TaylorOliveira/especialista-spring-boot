@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,5 +23,5 @@ public class Kitchen {
 
     @JsonIgnore
     @OneToMany(mappedBy = "kitchen")
-    private List<Restore> restores;
+    private List<Restore> restoreList = new ArrayList<>();
 }

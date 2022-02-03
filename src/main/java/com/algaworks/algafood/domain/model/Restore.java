@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +25,10 @@ public class Restore {
     @ManyToOne
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
+
+    @ManyToMany
+    @JoinTable(name = "restore_payment_method",
+        joinColumns = @JoinColumn(name = "restore_id"),
+        inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
+    private List<PaymentMethod> paymentMethodList = new ArrayList<>();
 }

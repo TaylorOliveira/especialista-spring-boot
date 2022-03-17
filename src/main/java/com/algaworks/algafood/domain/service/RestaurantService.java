@@ -1,35 +1,35 @@
 package com.algaworks.algafood.domain.service;
 
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
+import com.algaworks.algafood.domain.model.Restaurant;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
-import com.algaworks.algafood.domain.repository.RestoreRepository;
-import com.algaworks.algafood.domain.model.Restore;
+import com.algaworks.algafood.domain.repository.RestaurantRepository;
 import com.algaworks.algafood.domain.model.Kitchen;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RestoreService {
+public class RestaurantService {
 
-    private final RestoreRepository restoreRepository;
+    private final RestaurantRepository restaurantRepository;
     private final KitchenRepository kitchenRepository;
 
-    public RestoreService(RestoreRepository restoreRepository, KitchenRepository kitchenRepository) {
-        this.restoreRepository = restoreRepository;
+    public RestaurantService(RestaurantRepository restaurantRepository, KitchenRepository kitchenRepository) {
+        this.restaurantRepository = restaurantRepository;
         this.kitchenRepository = kitchenRepository;
     }
 
-    public List<Restore> findAll() {
-        return restoreRepository.findAll();
+    public List<Restaurant> findAll() {
+        return restaurantRepository.findAll();
     }
 
-    public Restore save(Restore restore) {
-        Long kitchenId = restore.getKitchen().getId();
+    public Restaurant save(Restaurant restaurant) {
+        Long kitchenId = restaurant.getKitchen().getId();
         Kitchen kitchen = kitchenRepository.findById(kitchenId)
                 .orElseThrow(()->new EntityNotFoundException(
                         String.format("There is no kitchen registration with code %d.", kitchenId))
                 );
-        restore.setKitchen(kitchen);
-        return restoreRepository.save(restore);
+        restaurant.setKitchen(kitchen);
+        return restaurantRepository.save(restaurant);
     }
 }

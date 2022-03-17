@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Restore {
+public class Restaurant {
 
     @Id
     @EqualsAndHashCode.Include

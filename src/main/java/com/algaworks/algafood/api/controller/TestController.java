@@ -1,7 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
-import com.algaworks.algafood.domain.model.Restore;
-import com.algaworks.algafood.domain.repository.RestoreRepository;
+import com.algaworks.algafood.domain.model.Restaurant;
+import com.algaworks.algafood.domain.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +13,10 @@ import java.util.Optional;
 public class TestController {
 
     @Autowired
-    private RestoreRepository restoreRepository;
+    private RestaurantRepository restaurantRepository;
 
-    @GetMapping("/restore")
-    public Optional<Restore> searchFirst() {
-        return restoreRepository.findFirst();
+    @GetMapping("/restaurant")
+    public Optional<Restaurant> searchFirst() {
+        return restaurantRepository.findFirst();
     }
 }

@@ -41,6 +41,10 @@ public class Restore {
         inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
     private List<PaymentMethod> paymentMethodList = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "restore")
+    private List<Product> products;
+
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "dateTime")
     private LocalDateTime creationDateTime;

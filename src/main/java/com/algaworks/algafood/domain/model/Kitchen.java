@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "kitchen")
+@Table(name = "tbl_kitchen")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Kitchen {
 

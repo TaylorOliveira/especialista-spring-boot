@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "tbl_entity")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restore {
 
@@ -22,21 +22,24 @@ public class Restore {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(name = "shipping_fee", nullable = false)
     private BigDecimal shippingFee;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
 
+    @JsonIgnore
     @Embedded
     private Address address;
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "restore_payment_method",
+    @JoinTable(name = "tbl_restore_payment_method",
         joinColumns = @JoinColumn(name = "restore_id"),
         inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
     private List<PaymentMethod> paymentMethodList = new ArrayList<>();
@@ -45,10 +48,12 @@ public class Restore {
     @OneToMany(mappedBy = "restore")
     private List<Product> products;
 
+    @JsonIgnore
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "dateTime")
     private LocalDateTime creationDateTime;
 
+    @JsonIgnore
     @UpdateTimestamp
     @Column(nullable = false, columnDefinition = "dateTime")
     private LocalDateTime updatedDateTime;

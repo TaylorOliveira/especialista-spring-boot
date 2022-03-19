@@ -28,8 +28,8 @@ public class RestoreRepositoryImpl implements RestoreRepositoryQueries {
     @Lazy
     private RestoreRepository restoreRepository;
 
-    public List<Restore> find(String name,
-                              BigDecimal initialShippingFee, BigDecimal finalShippingFee) {
+    public List<Restore> find(String name, BigDecimal initialShippingFee,
+                              BigDecimal finalShippingFee) {
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Restore> criteria = builder.createQuery(Restore.class);
@@ -40,12 +40,12 @@ public class RestoreRepositoryImpl implements RestoreRepositoryQueries {
             predicates.add(builder.like(rootRestore.get("name"), name));
         }
         if(Objects.nonNull(initialShippingFee)) {
-            predicates.add(builder
-                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), initialShippingFee));
+            predicates.add(builder.lessThanOrEqualTo(rootRestore
+                    .get("shippingFee"), initialShippingFee));
         }
         if(Objects.nonNull(finalShippingFee)) {
-            predicates.add(builder
-                    .lessThanOrEqualTo(rootRestore.get("shippingFee"), finalShippingFee));
+            predicates.add(builder.lessThanOrEqualTo(rootRestore
+                    .get("shippingFee"), finalShippingFee));
         }
 
         criteria.where(predicates.toArray(new Predicate[0]));

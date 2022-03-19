@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "tbl_group")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Group {
 
@@ -16,10 +16,11 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "group_permission", joinColumns = @JoinColumn(name = "group_id"),
+    @JoinTable(name = "tbl_group_permission", joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private List<Permission> permissions = new ArrayList<>();
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "tbl_user")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
@@ -32,7 +32,7 @@ public class User {
     private LocalDateTime creationDateTime;
 
     @ManyToMany
-    @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id"),
+    @JoinTable(name = "tbl_user_group", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private List<Group> groups = new ArrayList<>();
 }

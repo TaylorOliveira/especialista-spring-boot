@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity(name = "tbl_payment_method")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PaymentMethod {
 

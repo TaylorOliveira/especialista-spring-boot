@@ -2,12 +2,14 @@ package com.algaworks.algafood.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
-@Entity(name = "tbl_state")
+@Entity(name = "tbl_product")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class State {
+public class Product {
 
     @Id
     @EqualsAndHashCode.Include
@@ -16,4 +18,17 @@ public class State {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false)
+    private Boolean active;
+
+//    @ManyToOne
+//    @JoinColumn(nullable = false)
+//    private Restore restore;
 }

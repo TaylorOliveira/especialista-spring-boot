@@ -2,10 +2,11 @@ package com.algaworks.algafood.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity(name = "tbl_city")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class City {
 

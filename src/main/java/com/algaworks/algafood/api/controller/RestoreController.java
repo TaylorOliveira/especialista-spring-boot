@@ -29,7 +29,10 @@ public class RestoreController {
 
     @GetMapping
     public List<Restore> list() {
-        return restoreService.findAll();
+
+        List<Restore> restores = restoreService.findAll();
+        restores.get(0).getKitchen().getName();
+        return restores;
     }
 
     @GetMapping("/{restoreId}")

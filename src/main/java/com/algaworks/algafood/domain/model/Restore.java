@@ -1,7 +1,6 @@
 package com.algaworks.algafood.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -39,12 +38,12 @@ public class Restore {
     @Embedded
     private Address address;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+//    @JsonIgnore
+    @ManyToMany //(fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_restore_payment_method",
         joinColumns = @JoinColumn(name = "restore_id"),
         inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
-    private List<PaymentMethod> paymentMethodList = new ArrayList<>();
+    private List<PaymentMethod> paymentMethods = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany

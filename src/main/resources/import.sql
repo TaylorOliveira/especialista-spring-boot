@@ -34,7 +34,7 @@ insert into tbl_permission (id, name, description) values (1, 'CONSULTAR_COZINHA
 insert into tbl_permission (id, name, description) values (2, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
 
 -- Adding payment methods to the restores
-insert into tbl_restore_payment_method (restore_id, payment_method_id) values values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
+insert into tbl_restore_payment_method (restore_id, payment_method_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
 
 -- Adding products
 insert into tbl_product (name, description, price, active, restore_id) values ('Porco com molho agridoce', 'Deliciosa carne suína ao molho especial', 78.90, 1, 1);

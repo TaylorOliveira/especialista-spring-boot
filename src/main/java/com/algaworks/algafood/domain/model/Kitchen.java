@@ -23,5 +23,5 @@ public class Kitchen {
 
     @JsonIgnore
     @OneToMany(mappedBy = "kitchen")
-    private List<Restore> restoreList = new ArrayList<>();
+    private List<Restore> restores = new ArrayList<>();
 }

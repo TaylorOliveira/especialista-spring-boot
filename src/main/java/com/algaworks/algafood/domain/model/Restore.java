@@ -30,8 +30,8 @@ public class Restore {
     private BigDecimal shippingFee;
 
 //    @JsonIgnore
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    @ManyToOne // (fetch = FetchType.LAZY)
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
 
@@ -40,7 +40,7 @@ public class Restore {
     private Address address;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_restore_payment_method",
         joinColumns = @JoinColumn(name = "restore_id"),
         inverseJoinColumns = @JoinColumn(name = "payment_method_id"))

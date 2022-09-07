@@ -1,10 +1,10 @@
 package com.algaworks.algafood.infrastructure.repository;
 
-import com.algaworks.algafood.domain.repository.RestoreRepositoryQueries;
-import com.algaworks.algafood.domain.repository.RestoreRepository;
-import com.algaworks.algafood.infrastructure.repository.spec.RestoreSpecs;
+import com.algaworks.algafood.domain.model.Restaurant;
+import com.algaworks.algafood.domain.repository.RestaurantRepositoryQueries;
+import com.algaworks.algafood.domain.repository.RestaurantRepository;
+import com.algaworks.algafood.infrastructure.repository.spec.RestaurantSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.algaworks.algafood.domain.model.Restore;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,44 +19,40 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Repository
-public class RestoreRepositoryImpl implements RestoreRepositoryQueries {
+public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
     @Lazy
-    private RestoreRepository restoreRepository;
+    private RestaurantRepository restaurantRepository;
 
-    public List<Restore> find(String name, BigDecimal initialShippingFee,
-                              BigDecimal finalShippingFee) {
-
+    public List<Restaurant> find(String name, BigDecimal initialShippingFee,
+                                 BigDecimal finalShippingFee) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Restore> criteria = builder.createQuery(Restore.class);
-        Root<Restore> rootRestore = criteria.from(Restore.class);
-
-        List<Predicate> predicates = new ArrayList<Predicate>();
+        CriteriaQuery<Restaurant> criteria = builder.createQuery(Restaurant.class);
+        Root<Restaurant> restaurantRoot = criteria.from(Restaurant.class);
+        List<Predicate> predicates = new ArrayList<>();
         if(StringUtils.hasText(name)) {
-            predicates.add(builder.like(rootRestore.get("name"), name));
+            predicates.add(builder.like(restaurantRoot.get("name"), name));
         }
         if(Objects.nonNull(initialShippingFee)) {
-            predicates.add(builder.lessThanOrEqualTo(rootRestore
+            predicates.add(builder.lessThanOrEqualTo(restaurantRoot
                     .get("shippingFee"), initialShippingFee));
         }
         if(Objects.nonNull(finalShippingFee)) {
-            predicates.add(builder.lessThanOrEqualTo(rootRestore
+            predicates.add(builder.lessThanOrEqualTo(restaurantRoot
                     .get("shippingFee"), finalShippingFee));
         }
-
         criteria.where(predicates.toArray(new Predicate[0]));
-
-        TypedQuery<Restore> restoreTypedQuery = entityManager.createQuery(criteria);
-        return restoreTypedQuery.getResultList();
+        TypedQuery<Restaurant> restaurantTypedQuery = entityManager.createQuery(criteria);
+        return restaurantTypedQuery.getResultList();
     }
 
     @Override
-    public List<Restore> findWithFreeShipping(String name) {
-        return restoreRepository.findAll(RestoreSpecs.withFreeShipping()
-                .and(RestoreSpecs.withSimilarName(name)));
+    public List<Restaurant> findWithFreeShipping(String name) {
+        return restaurantRepository.findAll(RestaurantSpecs.withFreeShipping()
+                .and(RestaurantSpecs.withSimilarName(name)));
     }
 }

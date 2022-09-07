@@ -30,5 +30,5 @@ public class Product {
 
 //    @ManyToOne
 //    @JoinColumn(nullable = false)
-//    private Restore restore;
+//    private Restaurant restaurant;
 }

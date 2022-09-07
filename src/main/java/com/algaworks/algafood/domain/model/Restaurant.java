@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity(name = "tbl_restore")
+@Entity(name = "tbl_restaurant")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restaurant {
 
@@ -40,8 +40,8 @@ public class Restaurant {
 
 //    @JsonIgnore
     @ManyToMany //(fetch = FetchType.EAGER)
-    @JoinTable(name = "tbl_restore_payment_method",
-        joinColumns = @JoinColumn(name = "restore_id"),
+    @JoinTable(name = "tbl_restaurant_payment_method",
+        joinColumns = @JoinColumn(name = "restaurant_id"),
         inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
     private List<PaymentMethod> paymentMethods = new ArrayList<>();
 

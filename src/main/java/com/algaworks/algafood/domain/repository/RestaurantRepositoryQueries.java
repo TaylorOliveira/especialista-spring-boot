@@ -6,8 +6,7 @@ import java.util.List;
 
 public interface RestaurantRepositoryQueries {
 
-    List<Restaurant> find(String name,
-                          BigDecimal initialShippingFee, BigDecimal finalShippingFee);
+    List<Restaurant> find(String name, BigDecimal initialShippingFee, BigDecimal finalShippingFee);
 
     List<Restaurant> findWithFreeShipping(String name);
 }

@@ -4,8 +4,8 @@ package com.algaworks.algafood.api.controller;
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
 import com.algaworks.algafood.domain.model.Restaurant;
 import com.algaworks.algafood.domain.repository.RestaurantRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.algaworks.algafood.domain.service.RestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ReflectionUtils;
@@ -40,11 +40,12 @@ public class RestaurantController {
 
     @PutMapping("/{restaurantId}")
     public ResponseEntity<?> update(@PathVariable Long restaurantId,
-                                          @RequestBody Restaurant restaurantRequest) {
+                                    @RequestBody Restaurant restaurantRequest) {
         try {
             Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
             if(restaurant.isPresent()) {
-                BeanUtils.copyProperties(restaurantRequest, restaurant.get(), "id");;
+                BeanUtils.copyProperties(restaurantRequest, restaurant.get(),
+                        "id", "paymentMethodList", "address", "creationDateTime");
                 return ResponseEntity.ok(restaurantService.save(restaurant.get()));
             }
             return ResponseEntity.notFound().build();
@@ -90,7 +91,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurant/with-free-shipping")
-    public List<Restaurant> restaurantWithFreeShipping(@RequestParam("name") String name) {
+    public List<Restaurant> restaurantsWithFreeShipping(@RequestParam("name") String name) {
         return restaurantRepository.findWithFreeShipping(name);
     }
 }

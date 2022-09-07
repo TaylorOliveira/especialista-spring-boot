@@ -3,8 +3,8 @@ package com.algaworks.algafood.domain.service;
 import com.algaworks.algafood.domain.exception.EntityNotFoundException;
 import com.algaworks.algafood.domain.model.Restaurant;
 import com.algaworks.algafood.domain.repository.KitchenRepository;
-import com.algaworks.algafood.domain.repository.RestaurantRepository;
 import com.algaworks.algafood.domain.model.Kitchen;
+import com.algaworks.algafood.domain.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
